@@ -39,7 +39,7 @@ const Login = () => {
         e.preventDefault();
         try {
             await Auth.signIn(email, password);
-            alert("Logged in");
+            setAuthenticated(true);
             history.push('/')
         } catch (e) {
             alert(e.message);

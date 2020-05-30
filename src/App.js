@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import Navbar from './components/Navbar';
+import Navbar from './components/Navigation/Navbar';
 import Routes from '../src/Routes';
 import { AppContext } from './libs/contextLib';
 
@@ -15,7 +15,7 @@ const App = () => {
   return (
     // !authenticating && (
     <AppContainer>
-      <Navbar /* isAuthenticated={ authenticated } setIsAuthenticated={ setAuthenticated } */ />
+      <Navbar authenticated={ authenticated } setAuthenticated={ setAuthenticated } />
       <AppContext.Provider value={ { authenticated, setAuthenticated } }>
         <Routes />
       </AppContext.Provider>

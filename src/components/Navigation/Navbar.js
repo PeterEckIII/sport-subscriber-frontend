@@ -28,7 +28,7 @@ const Navbar = ({ authenticated, setAuthenticated }) => {
         authenticated ? authNavItem = (
             <>
                 <NavItem>
-                    <NavLink onClick={ handleLogout } to="/">Logout</NavLink>
+                    <NavLink onClick={ handleLogout } to="/login">Logout</NavLink>
                 </NavItem>
             </>
         ) : authNavItem = (
