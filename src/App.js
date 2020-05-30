@@ -3,16 +3,22 @@ import styled from 'styled-components';
 
 import Navbar from './components/Navbar';
 import Routes from '../src/Routes';
+import { AppContext } from './libs/contextLib';
 
 const AppContainer = styled.div`
   margin-top: 15px;
 `;
 
-function App() {
+const App = () => {
+  // const [ authenticated, setAuthenticated ] = useState(false);
+  // const [ authenticating, setAuthenticating ] = useState(true);
   return (
+    // !authenticating && (
     <AppContainer>
-      <Navbar />
-      <Routes />
+      <Navbar /* isAuthenticated={ authenticated } setIsAuthenticated={ setAuthenticated } */ />
+      <AppContext.Provider /* value={ { authenticated, setAuthenticated } }*/>
+        <Routes />
+      </AppContext.Provider>
     </AppContainer>
   );
 }
