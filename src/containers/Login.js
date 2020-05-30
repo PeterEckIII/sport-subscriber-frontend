@@ -24,7 +24,7 @@ const Login = () => {
     const history = useHistory();
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
-    const { setIsAuthenticated } = useAppContext();
+    const { setAuthenticated } = useAppContext();
 
     const handleEmailChange = event => {
         setEmail(event.target.value);
@@ -34,16 +34,17 @@ const Login = () => {
         setPassword(event.target.value);
     }
 
-    const handleSubmit = async event => {
-        event.preventDefault();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            const result = await Auth.signIn(email, password);
-            console.log(result);
-            setIsAuthenticated(true);
-            history.push('/');
-        } catch (error) {
-            console.log(error.message)
+            await Auth.signIn(email, password);
+            alert("Logged in");
+            history.push('/')
+        } catch (e) {
+            alert(e.message);
         }
+        // setAuthenticated(true);
     }
 
     return (

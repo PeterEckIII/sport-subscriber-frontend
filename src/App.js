@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Navbar from './components/Navbar';
@@ -10,13 +10,13 @@ const AppContainer = styled.div`
 `;
 
 const App = () => {
-  // const [ authenticated, setAuthenticated ] = useState(false);
+  const [ authenticated, setAuthenticated ] = useState(false);
   // const [ authenticating, setAuthenticating ] = useState(true);
   return (
     // !authenticating && (
     <AppContainer>
       <Navbar /* isAuthenticated={ authenticated } setIsAuthenticated={ setAuthenticated } */ />
-      <AppContext.Provider /* value={ { authenticated, setAuthenticated } }*/>
+      <AppContext.Provider value={ { authenticated, setAuthenticated } }>
         <Routes />
       </AppContext.Provider>
     </AppContainer>
