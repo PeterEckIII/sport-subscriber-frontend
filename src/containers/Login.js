@@ -4,7 +4,8 @@ import { Auth } from 'aws-amplify';
 import { useHistory } from 'react-router-dom';
 
 import TextField from '../components/TextField';
-import Button from '../components/Button'
+import FormButton from '../components/FormButton'
+import ForgotPassword from '../components/ForgotPassword';
 import { useAppContext } from '../libs/contextLib';
 
 const LoginContainer = styled.div`
@@ -35,15 +36,18 @@ const Login = () => {
     }
 
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            await Auth.signIn(email, password);
-            setAuthenticated(true);
-            history.push('/')
-        } catch (e) {
-            alert(e.message);
-        }
+        Auth
+            .signIn(email, password)
+            .then(res => {
+                console.log(`Cognito User ${ JSON.stringify(res) }`)
+                setAuthenticated(true);
+                history.push('/')
+            })
+            .catch(e => {
+                console.log(`Error logging in: ${ e }`)
+            })
         // setAuthenticated(true);
     }
 
@@ -69,9 +73,10 @@ const Login = () => {
                     placeholder="MrsClaus1234"
                     onChange={ handlePasswordChange }
                 />
-                <Button email={ email } password={ password }>
+                <FormButton email={ email } password={ password }>
                     Login
-                </Button>
+                </FormButton>
+                <ForgotPassword />
             </LoginForm>
         </LoginContainer>
     );
