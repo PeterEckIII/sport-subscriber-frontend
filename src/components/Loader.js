@@ -6,6 +6,7 @@ const LoaderContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 10px 15px;
 `;
 
 const Loader = ({ size, margin, color }) => (
