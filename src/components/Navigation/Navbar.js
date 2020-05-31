@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Auth } from 'aws-amplify';
 import { useHistory } from 'react-router-dom';
-import { Auth } from "aws-amplify";
 
 import NavItem from './NavItem';
 import NavLink from './NavLink';
@@ -16,10 +16,21 @@ const Nav = styled.nav`
 `;
 
 const Navbar = ({ authenticated, setAuthenticated }) => {
-    let history = useHistory();
+    const history = useHistory();
 
     const handleLogout = () => {
-        setAuthenticated(false);
+        Auth
+            .signOut()
+            .then(res => {
+                console.log(`Signed out user ${ JSON.stringify(res) }`);
+            })
+            .catch(e => {
+                console.log(`Error signing out: ${ e }`)
+            })
+            .finally(_ => {
+                history.push('/')
+                setAuthenticated(false);
+            })
     }
 
     let authNavItem;
@@ -28,7 +39,7 @@ const Navbar = ({ authenticated, setAuthenticated }) => {
         authenticated ? authNavItem = (
             <>
                 <NavItem>
-                    <NavLink onClick={ handleLogout } to="/login">Logout</NavLink>
+                    <button onClick={ handleLogout }>Logout</button>
                 </NavItem>
             </>
         ) : authNavItem = (
