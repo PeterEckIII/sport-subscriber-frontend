@@ -6,6 +6,7 @@ import { Auth } from 'aws-amplify';
 import Navbar from './components/Navigation/Navbar';
 import Routes from '../src/Routes';
 import { AppContext } from './libs/contextLib';
+import { onError } from './libs/errorLib';
 
 import Amplify from 'aws-amplify';
 import config from './config';
@@ -58,7 +59,7 @@ const App = () => {
         if (e === 'No current user') {
           console.log(e);
         } else {
-          alert(e);
+          onError(e);
         }
       })
       .finally(_ => {

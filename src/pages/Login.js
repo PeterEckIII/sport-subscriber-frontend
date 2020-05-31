@@ -8,6 +8,7 @@ import FormButton from '../components/FormButton'
 import ForgotPassword from '../components/ForgotPassword';
 import Loader from '../components/Loader';
 import { useAppContext } from '../libs/contextLib';
+import { onError } from '../libs/errorLib';
 
 const LoginContainer = styled.div`
     @media all and (min-width: 480px) {
@@ -48,7 +49,7 @@ const Login = () => {
                 history.push('/')
             })
             .catch(e => {
-                console.log(`Error logging in: ${ e }`)
+                onError(e);
             })
             .finally(_ => {
                 setLoading(false);
