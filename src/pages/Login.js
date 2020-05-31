@@ -7,6 +7,7 @@ import TextField from '../components/TextField';
 import FormButton from '../components/FormButton'
 import ForgotPassword from '../components/ForgotPassword';
 import Loader from '../components/Loader';
+import { useFormFields } from '../libs/hooksLib';
 import { useAppContext } from '../libs/contextLib';
 import { onError } from '../libs/errorLib';
 
@@ -25,24 +26,18 @@ const LoginForm = styled.form`
 
 const Login = () => {
     const history = useHistory();
-    const [ email, setEmail ] = useState('');
-    const [ password, setPassword ] = useState('');
     const [ loading, setLoading ] = useState(false);
     const { setAuthenticated } = useAppContext();
-
-    const handleEmailChange = event => {
-        setEmail(event.target.value);
-    }
-
-    const handlePasswordChange = event => {
-        setPassword(event.target.value);
-    }
+    const [ fields, setFields ] = useFormFields({
+        email: '',
+        password: ''
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
         Auth
-            .signIn(email, password)
+            .signIn(fields.email, fields.password)
             .then(res => {
                 console.log(`Cognito User ${ JSON.stringify(res) }`)
                 setAuthenticated(true);
@@ -60,7 +55,7 @@ const Login = () => {
         <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />
     ) : (
             <>
-                <FormButton email={ email } password={ password } loading={ loading } setLoading={ setLoading } onClick={ handleSubmit }>
+                <FormButton email={ fields.email } password={ fields.password } loading={ loading } setLoading={ setLoading } onClick={ handleSubmit }>
                     Login
                 </FormButton>
             </>
@@ -73,20 +68,20 @@ const Login = () => {
                     htmlFor='email'
                     labelName="Email"
                     type="text"
-                    value={ email }
+                    value={ fields.email }
                     name="email"
                     placeholder="Santa.Claus@northpole.com"
-                    onChange={ handleEmailChange }
+                    onChange={ setFields }
                     autoFocus
                 />
                 <TextField
                     htmlFor="password"
                     labelName="Password"
                     type="password"
-                    value={ password }
+                    value={ fields.password }
                     name="password"
                     placeholder="MrsClaus1234"
-                    onChange={ handlePasswordChange }
+                    onChange={ setFields }
                 />
                 { ui }
                 <ForgotPassword />
