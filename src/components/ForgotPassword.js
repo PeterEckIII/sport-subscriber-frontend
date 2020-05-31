@@ -1,24 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Auth } from 'aws-amplify';
+// import { Auth } from 'aws-amplify';
 
 const PasswordButton = styled.button`
     font-size: 0.5rem;
-    margin: 5px 0px;
+    margin-left: 10px;
     padding: 4px 8px;
+    border: none;
+    outline: none;
+    background-color: #fff;
+
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
 `;
 
 const ForgotPassword = () => {
 
     const handleForgotPassword = () => {
-        Auth
-            .forgotPasswordSubmit()
-            .then(res => {
-                console.log(res);
-            })
-            .catch(e => {
-                console.log(e);
-            })
+        console.log(`Forgot Password function called`)
     }
 
     return (
