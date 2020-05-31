@@ -1,9 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { Auth } from 'aws-amplify';
+// import { AmplifyAuthenticator } from '@aws-amplify/ui-react';
 
 import Navbar from './components/Navigation/Navbar';
 import Routes from '../src/Routes';
 import { AppContext } from './libs/contextLib';
+
+import Amplify from 'aws-amplify';
+import config from './config';
+
+Amplify.configure({
+  Auth: {
+    mandatorySignIn: true,
+    region: config.cognito.REGION,
+    userPoolId: config.cognito.USER_POOL_ID,
+    identityPoolId: config.cognito.IDENTITY_POOL_ID,
+    userPoolWebClientId: config.cognito.APP_CLIENT_ID,
+  },
+  Storage: {
+    region: config.s3.REGION,
+    bucket: config.s3.BUCKET,
+    identityPoolId: config.cognito.IDENTITY_POOL_ID
+  },
+  API: {
+    endpoints: [
+      {
+        name: 'sport-subscriber-dev',
+        endpoint: config.apiGateway.URL,
+        region: config.apiGateway.REGION
+      },
+    ]
+  }
+});
 
 const AppContainer = styled.div`
   margin-top: 15px;
@@ -11,15 +40,41 @@ const AppContainer = styled.div`
 
 const App = () => {
   const [ authenticated, setAuthenticated ] = useState(false);
-  // const [ authenticating, setAuthenticating ] = useState(true);
+  const [ authenticating, setAuthenticating ] = useState(true);
+
+  useEffect(() => {
+    checkForSession();
+  }, [])
+
+  const checkForSession = () => {
+    Auth
+      .currentSession()
+      .then(res => {
+        console.log(`Current user ${ res }`);
+        setAuthenticated(true);
+        return res;
+      })
+      .catch(e => {
+        if (e === 'No current user') {
+          console.log(e);
+        } else {
+          alert(e);
+        }
+      })
+      .finally(_ => {
+        setAuthenticating(false);
+      })
+  };
+
   return (
-    // !authenticating && (
-    <AppContainer>
-      <Navbar authenticated={ authenticated } setAuthenticated={ setAuthenticated } />
-      <AppContext.Provider value={ { authenticated, setAuthenticated } }>
-        <Routes />
-      </AppContext.Provider>
-    </AppContainer>
+    !authenticating && (
+      <AppContainer>
+        <Navbar authenticated={ authenticated } setAuthenticated={ setAuthenticated } />
+        <AppContext.Provider value={ { authenticated, setAuthenticated } }>
+          <Routes />
+        </AppContext.Provider>
+      </AppContainer>
+    )
   );
 }
 
