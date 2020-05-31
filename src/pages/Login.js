@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import TextField from '../components/TextField';
 import FormButton from '../components/FormButton'
 import ForgotPassword from '../components/ForgotPassword';
+import Loader from '../components/Loader';
 import { useAppContext } from '../libs/contextLib';
 
 const LoginContainer = styled.div`
@@ -25,6 +26,7 @@ const Login = () => {
     const history = useHistory();
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
+    const [ loading, setLoading ] = useState(false);
     const { setAuthenticated } = useAppContext();
 
     const handleEmailChange = event => {
@@ -35,9 +37,9 @@ const Login = () => {
         setPassword(event.target.value);
     }
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoading(true);
         Auth
             .signIn(email, password)
             .then(res => {
@@ -48,12 +50,24 @@ const Login = () => {
             .catch(e => {
                 console.log(`Error logging in: ${ e }`)
             })
-        // setAuthenticated(true);
+            .finally(_ => {
+                setLoading(false);
+            })
     }
+
+    let ui = loading ? (
+        <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />
+    ) : (
+            <>
+                <FormButton email={ email } password={ password } loading={ loading } setLoading={ setLoading } onClick={ handleSubmit }>
+                    Login
+                </FormButton>
+            </>
+        )
 
     return (
         <LoginContainer>
-            <LoginForm onSubmit={ handleSubmit }>
+            <LoginForm>
                 <TextField
                     htmlFor='email'
                     labelName="Email"
@@ -73,9 +87,7 @@ const Login = () => {
                     placeholder="MrsClaus1234"
                     onChange={ handlePasswordChange }
                 />
-                <FormButton email={ email } password={ password }>
-                    Login
-                </FormButton>
+                { ui }
                 <ForgotPassword />
             </LoginForm>
         </LoginContainer>

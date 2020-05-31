@@ -1,8 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const StyledButton = styled.button`
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 8px 8px;
     margin-top: 10px;
     margin-right: 15px;
@@ -10,11 +12,13 @@ const StyledButton = styled.button`
     outline: none;
     cursor: pointer;
     width: 97%;
-    background-color: #fff;
-    color: #20BF6B;
+    background-color: ${props => props.loading ? '#20BF6B' : '#fff' };
+    color: ${props => props.loading ? '#fff' : '#20BF6B' };
     border: 2px solid #20BF6B;
     font-weight: 600;
     font-size: 1rem;
+    letter-spacing: ${ props => props.loading && '0.5px' };
+    transition: ${props => props.loading && 'all 0.4s ease 0s' };
 
     &:hover {
         letter-spacing: 1px;
@@ -28,21 +32,28 @@ const StyledButton = styled.button`
     }
 `;
 
+const ButtonText = styled.span`
+    display: inline;
+`;
+
 const ButtonContainer = styled.div`
     margin: 0 auto;
     padding: 10px 15px;
     width: 100%;
 `;
 
-const FormButton = ({ children, email, password }) => {
+// Look at breaking this up -- too many props for one component
+const FormButton = ({ children, email, password, loading, disabled = false, ...props }) => {
     const validateForm = () => {
         return email.length > 0 && password.length > 0;
     }
 
+    const isDisabled = !validateForm() || disabled;
+
     return (
         <ButtonContainer>
-            <StyledButton disable={ !validateForm() }>
-                { children }
+            <StyledButton focus disabled={ isDisabled || loading } { ...props }>
+                <ButtonText>{ children } &nbsp;</ButtonText>
             </StyledButton>
         </ButtonContainer>
     )

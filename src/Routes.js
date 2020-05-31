@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom';
 
-import Home from './containers/Home';
-import Login from './containers/Login';
-import NotFound from './containers/NotFound';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
 
 const Routes = () => {
     return (
@@ -13,6 +13,8 @@ const Routes = () => {
             </Route>
             <Route exact path="/login">
                 <Login />
+            </Route>
+            <Route exact path="/signup">
             </Route>
             <Route>
                 <NotFound />
