@@ -33,6 +33,10 @@ const Login = () => {
         password: ''
     });
 
+    const validateForm = () => {
+        return fields.email.length > 0 && fields.password.length > 0;
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
@@ -55,7 +59,11 @@ const Login = () => {
         <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />
     ) : (
             <>
-                <FormButton email={ fields.email } password={ fields.password } loading={ loading } setLoading={ setLoading } onClick={ handleSubmit }>
+                <FormButton
+                    loading={ loading }
+                    validate={ validateForm }
+                    onClick={ handleSubmit }
+                >
                     Login
                 </FormButton>
             </>
