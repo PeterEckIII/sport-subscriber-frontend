@@ -43,16 +43,12 @@ const ButtonContainer = styled.div`
 `;
 
 // Look at breaking this up -- too many props for one component
-const FormButton = ({ children, email, password, loading, disabled = false, ...props }) => {
-    const validateForm = () => {
-        return email.length > 0 && password.length > 0;
-    }
-
-    const isDisabled = !validateForm() || disabled;
+const FormButton = ({ children, loading, disabled = false, validate, ...props }) => {
+    const isDisabled = !validate || disabled;
 
     return (
         <ButtonContainer>
-            <StyledButton focus disabled={ isDisabled || loading } { ...props }>
+            <StyledButton type="submit" focus disabled={ isDisabled || loading } { ...props }>
                 <ButtonText>{ children } &nbsp;</ButtonText>
             </StyledButton>
         </ButtonContainer>
