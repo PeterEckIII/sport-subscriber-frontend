@@ -8,7 +8,7 @@ import Loader from '../components/Loader';
 import { useAppContext } from '../libs/contextLib';
 import { onError } from '../libs/errorLib';
 import { useFormFields } from '../libs/hooksLib';
-import { Auth } from 'aws-amplify';
+import { Auth, API } from 'aws-amplify';
 
 const Container = styled.div`
     @media all and (min-width: 480px) {
@@ -59,12 +59,21 @@ const Signup = () => {
         e.preventDefault();
         setLoading(true);
 
+        const payload = {
+            body: {
+                email: fields.email,
+                password: fields.password
+            },
+            headers: {}
+        };
+
         Auth
             .signUp({
                 username: fields.email,
                 password: fields.password,
             })
             .then(res => {
+                API.post('users', '/users/', payload)
                 setLoading(false);
                 setNewUser(res)
             })
