@@ -1,20 +1,15 @@
 {
     "dev": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-titansportsubscriber-dev-74251-authRole",
-            "UnauthRoleArn": "arn:aws:iam::964575162768:role/amplify-titansportsubscriber-dev-74251-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::964575162768:role/amplify-titansportsubscriber-dev-74251-authRole",
+            "AuthRoleName": "amplify-titansportsubscriber-dev-173244-authRole",
+            "UnauthRoleArn": "arn:aws:iam::964575162768:role/amplify-titansportsubscriber-dev-173244-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::964575162768:role/amplify-titansportsubscriber-dev-173244-authRole",
             "Region": "us-east-1",
-            "DeploymentBucketName": "amplify-titansportsubscriber-dev-74251-deployment",
-            "UnauthRoleName": "amplify-titansportsubscriber-dev-74251-unauthRole",
-            "StackName": "amplify-titansportsubscriber-dev-74251",
-            "StackId": "arn:aws:cloudformation:us-east-1:964575162768:stack/amplify-titansportsubscriber-dev-74251/3e5a9330-a33c-11ea-a364-0e2e9aec3a21",
-            "AmplifyAppId": "dgr9uyf8xutpn"
-        },
-        "categories": {
-            "auth": {
-                "titansportsubscriber1629c29f": {}
-            }
+            "DeploymentBucketName": "amplify-titansportsubscriber-dev-173244-deployment",
+            "UnauthRoleName": "amplify-titansportsubscriber-dev-173244-unauthRole",
+            "StackName": "amplify-titansportsubscriber-dev-173244",
+            "StackId": "arn:aws:cloudformation:us-east-1:964575162768:stack/amplify-titansportsubscriber-dev-173244/766abc10-b5a1-11ea-b3f3-0ac49251e793",
+            "AmplifyAppId": "d1vnrnadz2760j"
         }
     }
 }
