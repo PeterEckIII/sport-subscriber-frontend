@@ -59,21 +59,13 @@ const Signup = () => {
         e.preventDefault();
         setLoading(true);
 
-        const payload = {
-            body: {
-                email: fields.email,
-                password: fields.password
-            },
-            headers: {}
-        };
-
         Auth
             .signUp({
                 username: fields.email,
                 password: fields.password,
             })
             .then(res => {
-                API.post('users', '/users/', payload)
+
                 setLoading(false);
                 setNewUser(res)
             })
