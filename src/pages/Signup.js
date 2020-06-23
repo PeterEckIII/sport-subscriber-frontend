@@ -78,8 +78,18 @@ const Signup = () => {
     const handleConfirmationSubmit = e => {
         e.preventDefault();
         setLoading(true);
+
+        const payload = {
+            body: {
+                email: fields.email,
+                password: fields.password
+            },
+            headers: {}
+        };
+
         try {
             Auth.confirmSignUp(fields.email, fields.confirmationCode)
+            API.post('users', '/users/', payload)
             Auth.signIn(fields.email, fields.password);
             setAuthenticated(true);
             setLoading(false);
