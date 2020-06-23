@@ -89,14 +89,6 @@ const Signup = () => {
         }
     }
 
-    const handleWbbCheck = e => {
-        setWbbSubscribed(e.target.checked)
-    }
-
-    const handleMfbCheck = e => {
-        setMfbSubscribed(e.target.checked)
-    }
-
     let confirmationUi = loading ? (
         <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />
     ) : (
