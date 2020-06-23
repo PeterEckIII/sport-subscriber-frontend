@@ -38,7 +38,7 @@ const Signup = () => {
         email: "",
         password: "",
         confirmPassword: "",
-        confirmationCode: ""
+        confirmationCode: "",
     });
     const history = useHistory();
     const { setAuthenticated } = useAppContext();
@@ -62,7 +62,7 @@ const Signup = () => {
         Auth
             .signUp({
                 username: fields.email,
-                password: fields.password
+                password: fields.password,
             })
             .then(res => {
                 setLoading(false);
@@ -87,6 +87,14 @@ const Signup = () => {
             onError(e)
             setLoading(false);
         }
+    }
+
+    const handleWbbCheck = e => {
+        setWbbSubscribed(e.target.checked)
+    }
+
+    const handleMfbCheck = e => {
+        setMfbSubscribed(e.target.checked)
     }
 
     let confirmationUi = loading ? (
