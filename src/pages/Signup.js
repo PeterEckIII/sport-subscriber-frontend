@@ -70,6 +70,9 @@ const Signup = () => {
                 setNewUser(res)
             })
             .catch(e => {
+                if (e === "UsernameExistsException") {
+                    Auth.resendSignUp(fields.email)
+                }
                 onError(e)
                 setLoading(false);
             })
