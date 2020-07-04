@@ -19,7 +19,7 @@ const Home = () => (
     <div>
         <HeroContainer>
             <Heading>Titan Sport Subscriber</Heading>
-            <TagLine>The <em>only</em> Divison 3 sports-based email notification service</TagLine>
+            <TagLine>Follow your favorite D3 Teams</TagLine>
         </HeroContainer>
     </div>
 );
