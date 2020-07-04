@@ -1,8 +1,8 @@
 export default {
     apiGateway: {
-        NAME: "dev-sport-subscriber-api",
+        NAME: "dev-sport-subscriber-user-api",
         REGION: "us-east-1",
-        URL: "https://njpocsnudg.execute-api.us-east-1.amazonaws.com/dev"
+        URL: "https://eoyb7j2hob.execute-api.us-east-1.amazonaws.com/dev"
     },
     cognito: {
         REGION: "us-east-1",
