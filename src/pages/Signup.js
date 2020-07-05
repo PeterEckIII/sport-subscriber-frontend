@@ -5,7 +5,8 @@ import { onError } from '../libs/errorLib';
 import { useFormFields } from '../libs/hooksLib';
 import { Auth, API } from 'aws-amplify';
 
-import SignupForm from '../components/SignupForm';
+import SignupForm from '../components/Form/Signup/SignupForm';
+import ConfirmationForm from '../components/Form/Signup/ConfirmationForm';
 
 const Signup = () => {
     const [ newUser, setNewUser ] = useState(null);
@@ -81,19 +82,29 @@ const Signup = () => {
 
     return (
         <>
-            <SignupForm
-                newUser={ newUser }
-                loading={ loading }
-                validateConfirmationForm={ validateConfirmationForm }
-                handleConfirmationSubmit={ handleConfirmationSubmit }
-                validateForm={ validateForm }
-                handleSubmit={ handleSubmit }
-                email={ fields.email }
-                password={ fields.password }
-                confirmPassword={ fields.confirmPassword }
-                confirmationCode={ fields.confirmationCode }
-                setFields={ setFields }
-            />
+            {
+                newUser === null ? (
+                    <SignupForm
+                        loading={ loading }
+                        handleSubmit={ handleSubmit }
+                        validateForm={ validateForm }
+                        validateConfirmationForm={ validateConfirmationForm }
+                        email={ fields.email }
+                        password={ fields.password }
+                        confirmPassword={ fields.confirmPassword }
+                        setFields={ setFields }
+                    />
+                ) :
+                    (
+                        <ConfirmationForm
+                            loading={ loading }
+                            validateConfirmationForm={ validateConfirmationForm }
+                            handleConfirmationSubmit={ handleConfirmationSubmit }
+                            confirmationCode={ fields.confirmationCode }
+                            setFields={ setFields }
+                        />
+                    )
+            }
         </>
     )
 }
