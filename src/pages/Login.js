@@ -5,7 +5,7 @@ import { useFormFields } from '../libs/hooksLib';
 import { useAppContext } from '../libs/contextLib';
 import { onError } from '../libs/errorLib'
 
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/Form/Login/LoginForm';
 
 const Login = () => {
     const history = useHistory();
