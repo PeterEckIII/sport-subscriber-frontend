@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import TextField from '../TextField';
+import TextField from '../../TextField';
 import FormButton from '../FormButton';
-import Loader from '../Loader';
+import Loader from '../../Loader';
 
 const Container = styled.div`
     @media all and (min-width: 480px) {
