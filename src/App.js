@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Auth } from 'aws-amplify';
-// import { AmplifyAuthenticator } from '@aws-amplify/ui-react';
 
 import Navbar from './components/Navigation/Navbar';
 import Routes from '../src/Routes';
