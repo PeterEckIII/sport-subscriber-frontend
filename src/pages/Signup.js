@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAppContext } from '../libs/contextLib';
 import { onError } from '../libs/errorLib';
-import { useFormFields } from '../libs/hooksLib';
+import { useFormFields, useSubscriptionGenerator } from '../libs/hooksLib';
 import { Auth, API } from 'aws-amplify';
 
 import SignupForm from '../components/Form/Signup/SignupForm';
@@ -11,11 +11,13 @@ import ConfirmationForm from '../components/Form/Signup/ConfirmationForm';
 const Signup = () => {
     const [ newUser, setNewUser ] = useState(null);
     const [ loading, setLoading ] = useState(false);
+    const [ subscriptions ] = useSubscriptionGenerator();
     const [ fields, setFields ] = useFormFields({
         email: "",
         password: "",
         confirmPassword: "",
         confirmationCode: "",
+        subscriptions: subscriptions
     });
     const history = useHistory();
     const { setAuthenticated } = useAppContext();
