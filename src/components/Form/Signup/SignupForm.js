@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import SubscriptionForm from '../Subscription/SubscriptionForm';
 import TextField from '../../TextField';
 import FormButton from '../FormButton';
 import Loader from '../../Loader';
@@ -75,6 +76,7 @@ const SignupForm = ({
                     placeholder="MrsClaus1234"
                     onChange={ setFields }
                 />
+                <SubscriptionForm />
             </StyledForm>
             { signupUi }
         </Container>
