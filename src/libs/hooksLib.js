@@ -12,3 +12,22 @@ export const useFormFields = initialState => {
         }
     ];
 }
+
+export const useSubscriptionGenerator = () => {
+    let subscriptionOptions = [
+        {
+            name: "Women's Basketball",
+            code: "WBB",
+            isSubscribed: false,
+            cadence: "weekly"
+        },
+        {
+            name: "Men's Football",
+            code: "MFB",
+            isSubscribed: false,
+            cadence: "weekly"
+        }
+    ];
+
+    return [ subscriptionOptions ];
+}
