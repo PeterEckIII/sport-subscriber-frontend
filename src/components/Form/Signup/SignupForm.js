@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import TextField from '../components/TextField';
-import FormButton from '../components/FormButton';
-import Loader from '../components/Loader';
+import TextField from '../TextField';
+import FormButton from '../FormButton';
+import Loader from '../Loader';
 
 const Container = styled.div`
     @media all and (min-width: 480px) {
@@ -28,49 +28,14 @@ const HelpBlock = styled.div`
 
 const SignupForm = ({
     loading,
-    validateConfirmationForm,
-    handleConfirmationSubmit,
-    confirmationCode,
-    validateForm,
     handleSubmit,
+    validateForm,
+    validateConfirmationForm,
     email,
     password,
     confirmPassword,
     setFields,
-    newUser
 }) => {
-    let confirmationUi = loading ? (
-        <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />
-    ) : (
-            <>
-                <FormButton
-                    loading={ loading }
-                    validate={ validateConfirmationForm }
-                    onClick={ handleConfirmationSubmit }
-                >
-                    Confirm
-                </FormButton>
-            </>
-        )
-
-    const confirmationForm = () => (
-        <Container>
-            <StyledForm onSubmit={ handleConfirmationSubmit }>
-                <TextField
-                    htmlFor="confirmationCode"
-                    labelName="Confirmation Code"
-                    type="text"
-                    name="confirmationCode"
-                    placeholder="Confirmation code"
-                    onChange={ setFields }
-                    value={ confirmationCode }
-                    autoFocus
-                />
-                <HelpBlock>Check your email for the confirmation code</HelpBlock>
-                { confirmationUi }
-            </StyledForm>
-        </Container>
-    )
 
     let signupUi = loading ? (
         <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />
@@ -87,7 +52,7 @@ const SignupForm = ({
             </>
         )
 
-    const signupForm = () => (
+    return (
         <Container>
             <StyledForm onSubmit={ handleSubmit }>
                 <TextField
@@ -121,12 +86,6 @@ const SignupForm = ({
             </StyledForm>
             { signupUi }
         </Container>
-    )
-
-    return (
-        <>
-            { newUser === null ? signupForm() : confirmationForm() }
-        </>
     )
 }
 

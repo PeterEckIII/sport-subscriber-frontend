@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components'
 
-
-import TextField from '../components/TextField';
-import FormButton from '../components/FormButton'
-import ForgotPassword from '../components/ForgotPassword';
-import Loader from '../components/Loader';
+import TextField from '../TextField';
+import FormButton from '../FormButton'
+import ForgotPassword from '../ForgotPassword';
+import Loader from '../Loader';
 
 
 const LoginContainer = styled.div`
