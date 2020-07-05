@@ -18,14 +18,6 @@ const StyledForm = styled.form`
     }
 `;
 
-const HelpBlock = styled.div`
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 5px 10px;
-    margin: 10px auto;
-    color: #999;
-`;
-
 const SignupForm = ({
     loading,
     handleSubmit,
