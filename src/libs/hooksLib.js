@@ -31,3 +31,11 @@ export const useSubscriptionGenerator = () => {
 
     return [ subscriptionOptions ];
 }
+
+
+export const useSubscriptionBuilder = (code, cadence) => {
+    return {
+        code,
+        cadence
+    }
+}

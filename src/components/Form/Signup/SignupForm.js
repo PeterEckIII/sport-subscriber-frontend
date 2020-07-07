@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Auth, API } from 'aws-amplify';
+import { useHistory } from 'react-router-dom';
 
-import SubscriptionForm from '../Subscription/SubscriptionForm';
+import SubscriptionList from '../Subscription/SubscriptionList';
 import TextField from '../../TextField';
 import FormButton from '../FormButton';
 import Loader from '../../Loader';
+import { useFormFields } from '../../../libs/hooksLib';
+import { useAppContext } from '../../../libs/contextLib';
+import { onError } from '../../../libs/errorLib';
 
 const Container = styled.div`
     @media all and (min-width: 480px) {
@@ -19,18 +24,52 @@ const StyledForm = styled.form`
     }
 `;
 
-const SignupForm = ({
-    loading,
-    handleSubmit,
-    validateForm,
-    validateConfirmationForm,
-    email,
-    password,
-    confirmPassword,
-    setFields,
-}) => {
+const SignupForm = ({ user, setUser, fields, setFields, validateConfirmationForm }) => {
+    const [ loading, setLoading ] = useState(false);
+    const [ checkedItems, setCheckedItems ] = useState({});
+    const [ subscriptions, setSubscriptions ] = useState([]);
+    const history = useHistory();
+    const { setAuthenticated } = useAppContext()
 
-    let signupUi = loading ? (
+    const validateForm = () => {
+        return (
+            fields.email.length > 0 &&
+            fields.password.length > 0 &&
+            fields.password === fields.confirmPassword
+        );
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        setLoading(true);
+
+        Auth
+            .signUp({
+                username: fields.email,
+                password: fields.password,
+            })
+            .then(res => {
+
+                setLoading(false);
+                setUser(res)
+            })
+            .catch(e => {
+                if (e === "UsernameExistsException") {
+                    Auth.resendSignUp(fields.email)
+                }
+                onError(e)
+                setLoading(false);
+            })
+    }
+
+    const handleSubscriptionsChange = newSubscription => {
+        setSubscriptions([
+            ...subscriptions,
+            newSubscription
+        ]);
+    }
+
+    let buttonUi = loading ? (
         <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />
     ) : (
             <>
@@ -52,7 +91,7 @@ const SignupForm = ({
                     htmlFor='email'
                     labelName="Email"
                     type="text"
-                    value={ email }
+                    value={ fields.email }
                     name="email"
                     placeholder="Santa.Claus@northpole.com"
                     onChange={ setFields }
@@ -62,7 +101,7 @@ const SignupForm = ({
                     htmlFor='password'
                     labelName="Password"
                     type="password"
-                    value={ password }
+                    value={ fields.password }
                     name="password"
                     placeholder="MrsClaus1234"
                     onChange={ setFields }
@@ -71,14 +110,17 @@ const SignupForm = ({
                     htmlFor='confirmPassword'
                     labelName="Confirm Password"
                     type="password"
-                    value={ confirmPassword }
+                    value={ fields.confirmPassword }
                     name="confirmPassword"
                     placeholder="MrsClaus1234"
                     onChange={ setFields }
                 />
-                <SubscriptionForm />
+                <SubscriptionList
+                    subscriptions={ subscriptions }
+                    handleSubscriptionsChange={ handleSubscriptionsChange }
+                />
             </StyledForm>
-            { signupUi }
+            { buttonUi }
         </Container>
     )
 }

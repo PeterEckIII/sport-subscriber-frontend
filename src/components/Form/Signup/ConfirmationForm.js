@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Auth, API } from 'aws-amplify';
+import { useHistory } from 'react-router-dom';
+
+import { useAppContext } from '../../../libs/contextLib';
+import { onError } from '../../../libs/errorLib';
 
 import TextField from '../../TextField';
 import FormButton from '../FormButton';
@@ -26,14 +31,38 @@ const HelpBlock = styled.div`
     color: #999;
 `;
 
-const ConfirmationForm = ({
-    loading,
-    validateConfirmationForm,
-    handleConfirmationSubmit,
-    confirmationCode,
-    setFields,
-}) => {
-    let confirmationUi = loading ? (
+const ConfirmationForm = ({ fields, setFields, validateConfirmationForm }) => {
+    const [ loading, setLoading ] = useState(false);
+    const { setAuthenticated } = useAppContext();
+    const history = useHistory();
+
+
+    const handleConfirmationSubmit = e => {
+        e.preventDefault();
+        setLoading(true);
+
+        const payload = {
+            body: {
+                email: fields.email,
+                password: fields.password
+            },
+            headers: {}
+        };
+
+        try {
+            Auth.confirmSignUp(fields.email, fields.confirmationCode)
+            API.post('users', '/users/', payload)
+            Auth.signIn(fields.email, fields.password);
+            setAuthenticated(true);
+            setLoading(false);
+            history.push("/")
+        } catch (error) {
+            onError(e)
+            setLoading(false);
+        }
+    }
+
+    let buttonUi = loading ? (
         <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />
     ) : (
             <>
@@ -57,11 +86,11 @@ const ConfirmationForm = ({
                     name="confirmationCode"
                     placeholder="Confirmation code"
                     onChange={ setFields }
-                    value={ confirmationCode }
+                    value={ fields.confirmationCode }
                     autoFocus
                 />
                 <HelpBlock>Check your email for the confirmation code</HelpBlock>
-                { confirmationUi }
+                { buttonUi }
             </StyledForm>
         </Container>
     )
