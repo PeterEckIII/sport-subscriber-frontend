@@ -1,15 +1,27 @@
 import React from 'react';
-import { useSubscriptionGenerator } from '../../../libs/hooksLib';
-
 
 import Subscription from './Subscription';
 
-const SubscriptionList = ({ subscriptions, handleSubscriptionsChange }) => {
-    const [ subscriptionOptions ] = useSubscriptionGenerator();
+const SubscriptionList = ({ subscriptions, dispatch }) => {
+
+    const handleSubscriptionToggle = e => {
+        dispatch({
+            type: 'TOGGLE_SUBSCRIPTION',
+            code: e.target.value
+        });
+    }
+
+    const handleCadenceChange = e => {
+        dispatch({
+            type: 'ADD_SUBSCRIPTION',
+            cadence: e.target.value,
+            code: e.target.name
+        })
+    }
 
     return (
         <div>
-            { subscriptionOptions.map(sub => {
+            { subscriptions.map(sub => {
                 return (
                     <Subscription
                         key={ sub.code }
@@ -17,8 +29,9 @@ const SubscriptionList = ({ subscriptions, handleSubscriptionsChange }) => {
                         labelName={ sub.name }
                         name={ sub.code }
                         value={ sub.code }
-                        subscriptions={ subscriptions }
-                        handleSubscriptionsChange={ handleSubscriptionsChange }
+                        cadence={ sub.cadence }
+                        handleSubscriptionToggle={ handleSubscriptionToggle }
+                        handleCadenceChange={ handleCadenceChange }
                     />
                 )
             }) }
