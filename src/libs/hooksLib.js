@@ -19,23 +19,15 @@ export const useSubscriptionGenerator = () => {
             name: "Women's Basketball",
             code: "WBB",
             isSubscribed: false,
-            cadence: "weekly"
+            cadence: ""
         },
         {
             name: "Men's Football",
             code: "MFB",
             isSubscribed: false,
-            cadence: "weekly"
+            cadence: ""
         }
     ];
 
     return [ subscriptionOptions ];
-}
-
-
-export const useSubscriptionBuilder = (code, cadence) => {
-    return {
-        code,
-        cadence
-    }
 }
