@@ -1,37 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Checkbox from '../../Checkbox'
+import CadenceDropdown from '../../CadenceDropdown';
 
 const Subscription = ({
     htmlFor,
     labelName,
     name,
     value,
-    subscriptions,
-    handleSubscriptionsChange
-}) => {
-    const [ checked, setChecked ] = useState(false);
-    const [ cadence, setCadence ] = useState('');
-    const [ code, setCode ] = useState('');
-    const [ newSubscription, setNewSubscription ] = useState({
-        code: '',
-        cadence: ''
-    });
-
-    const handleCheckChange = e => {
-        setChecked(!checked);
-        checked && handleCodeChange(e);
-    }
-
-    const handleCadenceChange = e => {
-        setCadence(e.target.value);
-    }
-
-    const handleCodeChange = e => {
-        setCode(e.target.value)
-    };
-
-    return (
+    cadence,
+    handleSubscriptionToggle,
+    handleCadenceChange
+}) => (
         <>
             <Checkbox
                 htmlFor={ htmlFor }
@@ -39,21 +19,14 @@ const Subscription = ({
                 name={ name }
                 value={ value }
                 type="checkbox"
-                checked={ checked }
-                onChange={ handleCheckChange }
+                onChange={ handleSubscriptionToggle }
             />
-            { checked && (
-                <>
-                    <label htmlFor="cadence">Email Preferences</label>
-                    <select value={ cadence } onChange={ handleCadenceChange } name="cadence">
-                        <option value="all">All</option>
-                        <option value="weekly">Weekly</option>
-                        <option value="gameday">Gameday</option>
-                    </select>
-                </>
-            ) }
+            <CadenceDropdown
+                code={ value }
+                cadence={ cadence }
+                handleCadenceChange={ handleCadenceChange }
+            />
         </>
     )
-}
 
 export default Subscription;
