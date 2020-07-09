@@ -31,11 +31,15 @@ const HelpBlock = styled.div`
     color: #999;
 `;
 
-const ConfirmationForm = ({ fields, setFields, validateConfirmationForm }) => {
-    const [ loading, setLoading ] = useState(false);
+const ConfirmationForm = ({
+    fields,
+    setFields,
+    validateConfirmationForm,
+    loading,
+    setLoading
+}) => {
     const { setAuthenticated } = useAppContext();
     const history = useHistory();
-
 
     const handleConfirmationSubmit = e => {
         e.preventDefault();
