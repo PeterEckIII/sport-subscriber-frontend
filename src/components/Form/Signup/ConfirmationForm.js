@@ -36,7 +36,8 @@ const ConfirmationForm = ({
     setFields,
     validateConfirmationForm,
     loading,
-    setLoading
+    setLoading,
+    subscriptions
 }) => {
     const { setAuthenticated } = useAppContext();
     const history = useHistory();
@@ -48,7 +49,8 @@ const ConfirmationForm = ({
         const payload = {
             body: {
                 email: fields.email,
-                password: fields.password
+                password: fields.password,
+                subscriptions: subscriptions
             },
             headers: {}
         };

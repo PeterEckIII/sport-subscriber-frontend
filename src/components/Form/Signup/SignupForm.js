@@ -63,6 +63,7 @@ const SignupForm = () => {
                     loading={ loading }
                     setLoading={ setLoading }
                     validateConfirmationForm={ validateConfirmationForm }
+                    subscriptions={ subscriptions }
                 />
             ) : (
                     <InformationForm
