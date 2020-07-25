@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import { onError } from '../libs/errorLib';
-import { Auth, API } from 'aws-amplify';
 
 import { useSubscriptionGenerator } from '../libs/hooksLib';
 
@@ -23,22 +20,7 @@ const ContainerElement = styled.div`
 `;
 
 const AddSubscription = () => {
-    const [ subscriptionOptions ] = useSubscriptionGenerator();
-    const [ code, setCode ] = useState('');
-    const [ cadence, setCadence ] = useState('');
-    const [ checked, setChecked ] = useState(false);
-
-    const handleCodeChange = e => {
-        setCode(e.target.value);
-    }
-
-    const handleCadenceChange = e => {
-        setCadence(e.target.value);
-    }
-
-    const handleCheckChange = e => {
-        setChecked(e.target.checked);
-    }
+    const [ subscriptionOptions ] = useSubscriptionGenerator()
 
     return (
         <>
@@ -50,7 +32,7 @@ const AddSubscription = () => {
                                 <ContainerElement><h3>{ sub.name }</h3></ContainerElement>
                                 <ContainerElement><p>{ sub.code }</p></ContainerElement>
                                 <ContainerElement><p>{ sub.cadence }</p></ContainerElement>
-                                <input type="checkbox" checked={ checked } onChange={ handleCheckChange } />
+                                {/* <input type="checkbox" checked={ checked } onChange={ handleCheckChange } /> */ }
                             </Container>
                         </>
                     )
