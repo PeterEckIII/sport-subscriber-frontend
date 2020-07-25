@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NotFound from './pages/NotFound';
 import AddSubscription from './pages/AddSubscription';
+import Profile from './pages/Profile';
 
 const Routes = () => {
     return (
@@ -21,6 +22,9 @@ const Routes = () => {
             </Route>
             <Route exact path="/add-subscription">
                 <AddSubscription />
+            </Route>
+            <Route exact path='/profile/:id'>
+                <Profile />
             </Route>
             <Route>
                 <NotFound />
