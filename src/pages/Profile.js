@@ -6,6 +6,7 @@ import { onError } from '../libs/errorLib';
 
 import TextField from '../components/TextField';
 import FormButton from '../components/Form/FormButton'
+import SubscriptionList from '../components/Subscription/SubscriptionList';
 import Loader from '../components/Loader';
 
 const PageContainer = styled.div`
@@ -14,15 +15,17 @@ const PageContainer = styled.div`
     }
 `;
 
-const ProfileContainer = styled.form`
+const SectionContainer = styled.form`
     @media all and (min-width: 480px) {
-        margin: 0 auto;
-        max-width: 320px
+        margin: 0% 8%;
+        max-width: 320px;
+        margin-bottom: 45px;
     }
 `;
 
 const Profile = () => {
     const [ user, setUser ] = useState({});
+    const [ userSubscriptions, setUserSubscriptions ] = useState([]);
     let { id } = useParams();
 
     const loadUserSettings = id => {
@@ -35,7 +38,9 @@ const Profile = () => {
             .get('users', `/users/${ id }`, payload)
             .then(res => {
                 let user = res.user.Item;
-                setUser(user)
+                setUser(user);
+                let subscriptions = res.user.Item.subscriptions;
+                setUserSubscriptions(subscriptions);
             })
             .catch(e => {
                 onError(e)
@@ -48,8 +53,8 @@ const Profile = () => {
 
     return (
         <PageContainer>
-            <ProfileContainer>
-                <h2>Profile Settings</h2>
+            <SectionContainer>
+                <h3>Profile Settings</h3>
                 <TextField
                     htmlFor="email"
                     labelName="Email"
@@ -67,7 +72,11 @@ const Profile = () => {
                 // onChange={}
                 />
                 <FormButton>Save</FormButton>
-            </ProfileContainer>
+            </SectionContainer>
+            <SectionContainer>
+                <h3>Subscriptions</h3>
+                <SubscriptionList subscriptions={ userSubscriptions } />
+            </SectionContainer>
         </PageContainer>
     )
 };
