@@ -45,7 +45,6 @@ const App = () => {
     Auth
       .currentSession()
       .then(res => {
-        console.log(`Current user ${ res }`);
         setAuthenticated(true);
         return res;
       })
