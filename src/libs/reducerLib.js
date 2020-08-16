@@ -5,7 +5,6 @@ export const subscriptionReducer = (subscriptions, action) => {
         case 'TOGGLE_SUBSCRIPTION':
             return subscriptions.map(subscription => {
                 if (subscription.code === action.code) {
-                    console.log(`Adding ${ subscription.code } to users subscription list`)
                     return {
                         ...subscription,
                         isSubscribed: !subscription.isSubscribed
@@ -15,6 +14,8 @@ export const subscriptionReducer = (subscriptions, action) => {
                 }
             });
         case 'ADD_SUBSCRIPTION':
+            // This needs to be changed to only accept a subscription if
+            // there is not already one with the given code
             return subscriptions.map(subscription => {
                 if (subscription.code === action.code) {
                     return {
