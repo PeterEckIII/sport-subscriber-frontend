@@ -14,7 +14,7 @@ const SubscriptionList = ({ subscriptions, dispatch }) => {
     const handleCadenceChange = e => {
         dispatch({
             type: 'ADD_SUBSCRIPTION',
-            cadence: e.target.value,
+            cadence: e.target.value || 'all',
             code: e.target.name
         })
     }
