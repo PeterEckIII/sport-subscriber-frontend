@@ -8,7 +8,7 @@ import FormButton from '../FormButton';
 import SubscriptionList from '../../../components/Subscription/SubscriptionList';
 import Loader from '../../Loader';
 import { subscriptionReducer } from '../../../libs/reducerLib';
-import { useFormFields, useSubscriptionGenerator } from '../../../libs/hooksLib';
+import { useSubscriptionGenerator } from '../../../libs/hooksLib';
 import { onError } from '../../../libs/errorLib';
 
 const PageContainer = styled.div`
@@ -61,17 +61,13 @@ const ProfileForm = () => {
         loadUserSettings(id);
     }, [ id ])
 
-    const handleSubmit = e => {
-        console.log(e.target.value)
-    }
-
     let buttonUi = loading ? (
         <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />
     ) : (
             <>
                 <FormButton
                     loading={ loading }
-                    onClick={ handleSubmit }
+                    onClick={ (e) => setLoading() }
                 >
                     Save Changes
                 </FormButton>

@@ -24,20 +24,27 @@ const Subscription = ({
     cadence,
     code,
     handleCadenceChange,
+    htmlFor,
+    labelName,
+    name,
+    value,
+
 }) => {
     return (
         <SubscriptionContainer>
             <Card>
                 <SubscriptionToggle
+                    htmlFor={ htmlFor }
+                    labelName={ labelName }
+                    name={ name }
+                    value={ value }
                     isSubscribed={ isSubscribed }
                     handleSubscriptionToggle={ handleSubscriptionToggle }
                 />
-                <p>{ cadence }</p>
-                <p>{ code }</p>
                 <CadenceDropdown
+                    code={ code }
                     cadence={ cadence }
                     handleCadenceChange={ handleCadenceChange }
-                    code={ code }
                 />
             </Card>
 

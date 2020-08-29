@@ -9,14 +9,18 @@ const SubStatus = styled.p`
 const SubscriptionToggle = ({
     toggle,
     isSubscribed,
+    htmlFor,
+    name,
+    value,
+    handleSubscriptionToggle
 }) => {
 
     return (
         <div>
-            <label htmlFor='isSubscribed'>
+            <label htmlFor={ htmlFor }>
                 <Toggle
-                    name="isSubscribed"
-                    checked={ isSubscribed }
+                    name={ name }
+                    checked={ value }
                     onChange={ toggle }
                 />
                 { isSubscribed

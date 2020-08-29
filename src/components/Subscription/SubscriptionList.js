@@ -28,10 +28,10 @@ const SubscriptionList = ({ subscriptions, dispatch }) => {
                         isSubscribed={ sub.isSubscribed }
                         cadence={ sub.cadence }
                         code={ sub.code }
-                        htmlFor
-                        labelName
-                        name
-                        value
+                        htmlFor={ sub.code }
+                        labelName={ sub.name }
+                        name={ sub.code }
+                        value={ sub.code }
                         handleSubscriptionToggle={ handleSubscriptionToggle }
                         handleCadenceChange={ handleCadenceChange }
                     />
