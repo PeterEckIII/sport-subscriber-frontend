@@ -1,16 +1,22 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 
 import Subscription from './Subscription';
-import { subscriptionReducer } from '../../libs/reducerLib';
 
-const SubscriptionList = ({ subscriptions }) => {
-    const [ _, dispatch ] = useReducer(subscriptionReducer, subscriptions)
+const SubscriptionList = ({ subscriptions, dispatch }) => {
 
     const handleSubscriptionToggle = e => {
         dispatch({
             type: 'TOGGLE_SUBSCRIPTION',
             code: e.target.value
         });
+    }
+
+    const handleCadenceChange = e => {
+        dispatch({
+            type: 'ADD_SUBSCRIPTION',
+            cadence: e.target.value || 'all',
+            code: e.target.name
+        })
     }
 
     return (
@@ -22,7 +28,12 @@ const SubscriptionList = ({ subscriptions }) => {
                         isSubscribed={ sub.isSubscribed }
                         cadence={ sub.cadence }
                         code={ sub.code }
+                        htmlFor
+                        labelName
+                        name
+                        value
                         handleSubscriptionToggle={ handleSubscriptionToggle }
+                        handleCadenceChange={ handleCadenceChange }
                     />
                 )
             }) }
