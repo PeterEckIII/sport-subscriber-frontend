@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Toggle from './Toggle';
+import SubscriptionToggle from './SubscriptionToggle';
+import CadenceDropdown from '../CadenceDropdown';
 
 const SubscriptionContainer = styled.div`
     display: flex;
@@ -22,16 +23,22 @@ const Subscription = ({
     handleSubscriptionToggle,
     cadence,
     code,
+    handleCadenceChange,
 }) => {
     return (
         <SubscriptionContainer>
             <Card>
-                <Toggle
+                <SubscriptionToggle
                     isSubscribed={ isSubscribed }
                     handleSubscriptionToggle={ handleSubscriptionToggle }
                 />
                 <p>{ cadence }</p>
                 <p>{ code }</p>
+                <CadenceDropdown
+                    cadence={ cadence }
+                    handleCadenceChange={ handleCadenceChange }
+                    code={ code }
+                />
             </Card>
 
         </SubscriptionContainer>
