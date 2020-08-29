@@ -1,5 +1,3 @@
-
-
 export const subscriptionReducer = (subscriptions, action) => {
     switch (action.type) {
         case 'TOGGLE_SUBSCRIPTION':
@@ -26,6 +24,8 @@ export const subscriptionReducer = (subscriptions, action) => {
                     return subscription;
                 }
             });
+        case 'LOAD_SUBSCRIPTIONS':
+            return action.subscriptions
         default:
             return new Error('No action given');
     }
