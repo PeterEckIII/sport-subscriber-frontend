@@ -1,9 +1,14 @@
 import React from 'react'
+import styled from 'styled-components';
+
+const Label = styled.label`
+    display: block;
+`;
 
 const CadenceDropdown = ({ cadence, handleCadenceChange, code }) => {
     return (
         <>
-            <label htmlFor={ code }>Email Preferences</label>
+            <Label htmlFor={ code }>Email Preferences</Label>
             <select value={ cadence } onChange={ handleCadenceChange } name={ code }>
                 <option value="all">All</option>
                 <option value="weekly">Weekly</option>
