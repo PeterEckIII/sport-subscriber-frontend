@@ -4,6 +4,7 @@ import Checkbox from '../../Checkbox'
 import CadenceDropdown from '../../CadenceDropdown';
 
 const Subscription = ({
+    isSubscribed,
     htmlFor,
     labelName,
     name,
@@ -18,7 +19,7 @@ const Subscription = ({
                 labelName={ labelName }
                 name={ name }
                 value={ value }
-                type="checkbox"
+                checked={ isSubscribed }
                 onChange={ handleSubscriptionToggle }
             />
             <CadenceDropdown
