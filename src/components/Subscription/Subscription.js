@@ -19,7 +19,6 @@ const Card = styled.div`
 `;
 
 const Subscription = ({
-    isSubscribed,
     handleSubscriptionToggle,
     cadence,
     code,
@@ -28,7 +27,7 @@ const Subscription = ({
     labelName,
     name,
     value,
-
+    isSubscribed
 }) => {
     return (
         <SubscriptionContainer>
@@ -37,8 +36,8 @@ const Subscription = ({
                     htmlFor={ htmlFor }
                     labelName={ labelName }
                     name={ name }
-                    value={ value }
                     isSubscribed={ isSubscribed }
+                    value={ value }
                     handleSubscriptionToggle={ handleSubscriptionToggle }
                 />
                 <CadenceDropdown
