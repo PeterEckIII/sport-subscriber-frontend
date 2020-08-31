@@ -3,11 +3,17 @@ import styled from 'styled-components'
 import { Toggle } from 'react-toggle-component'
 
 const SubStatus = styled.p`
-    color: ${props => props.isSubscribed === true ? '#68d391' : '#ccc' };
+    display: 'inline-block';
+    color: ${props => props.isSubscribed === true ? '#5DF255' : '#ccc' };
+    font-weight: 700;
+    vertical-align: top;
+`;
+
+const Container = styled.div`
+    display: flex;
 `;
 
 const SubscriptionToggle = ({
-    toggle,
     isSubscribed,
     htmlFor,
     name,
@@ -18,15 +24,21 @@ const SubscriptionToggle = ({
     return (
         <div>
             <label htmlFor={ htmlFor }>
-                <Toggle
-                    name={ name }
-                    checked={ value }
-                    onChange={ toggle }
-                />
-                { isSubscribed
-                    ? <SubStatus isSubscribed={ isSubscribed }>Active</SubStatus>
-                    : <SubStatus isSubscribed={ isSubscribed }>Inactive</SubStatus>
-                }
+                <Container>
+                    <Toggle
+                        name={ name }
+                        checked={ !isSubscribed }
+                        onToggle={ handleSubscriptionToggle }
+                        value={ value }
+                        rightKnobColor='#68d391'
+                        borderColor='gray'
+                    />
+                    <SubStatus
+                        isSubscribed={ isSubscribed }
+                    >
+                        { isSubscribed ? 'Active' : 'Inactive' }
+                    </SubStatus>
+                </Container>
             </label>
         </div>
     )
