@@ -22,7 +22,6 @@ const StyledField = styled.div`
 const Checkbox = ({
     htmlFor,
     labelName,
-    type,
     checked,
     onChange,
     value
@@ -30,7 +29,7 @@ const Checkbox = ({
         <StyledField>
             <div>
                 <Input
-                    type={ type }
+                    type="checkbox"
                     value={ value }
                     checked={ checked }
                     onChange={ onChange }
