@@ -11,9 +11,7 @@ export const subscriptionReducer = (subscriptions, action) => {
                     return subscription;
                 }
             });
-        case 'ADD_SUBSCRIPTION':
-            // This needs to be changed to only accept a subscription if
-            // there is not already one with the given code
+        case 'TOGGLE_CADENCE':
             return subscriptions.map(subscription => {
                 if (subscription.code === action.code) {
                     return {
