@@ -13,11 +13,11 @@ const SubscriptionList = ({ subscriptions, dispatch }) => {
 
     const handleCadenceChange = e => {
         console.log(`Value: ${ e.target.value } \n Name: ${ e.target.name }`)
-        // dispatch({
-        //     type: 'TOGGLE_CADENCE',
-        //     cadence: e.target.value || 'all',
-        //     code: e.target.name
-        // })
+        dispatch({
+            type: 'TOGGLE_CADENCE',
+            cadence: e.target.value || 'all',
+            code: e.target.name
+        })
     }
 
     return (
