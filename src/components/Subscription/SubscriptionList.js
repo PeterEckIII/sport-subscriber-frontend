@@ -13,7 +13,7 @@ const SubscriptionList = ({ subscriptions, dispatch }) => {
 
     const handleCadenceChange = e => {
         dispatch({
-            type: 'ADD_SUBSCRIPTION',
+            type: 'TOGGLE_CADENCE',
             cadence: e.target.value || 'all',
             code: e.target.name
         })
