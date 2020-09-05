@@ -33,9 +33,7 @@ const SubscriptionToggle = ({
                         rightKnobColor='#68d391'
                         borderColor='gray'
                     />
-                    <SubStatus
-                        isSubscribed={ isSubscribed }
-                    >
+                    <SubStatus isSubscribed={ isSubscribed }>
                         { isSubscribed ? 'Active' : 'Inactive' }
                     </SubStatus>
                 </Container>
