@@ -13,6 +13,16 @@ const Nav = styled.nav`
   justify-content: space-between;
   border-bottom: 3px solid #68d391;
   height: 4rem;
+  cursor: pointer;
+`;
+
+const LogoutButton = styled.button`
+    font-size: 100%;
+    font-family: inherit;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    cursor: pointer;
 `;
 
 const Navbar = ({ authenticated, setAuthenticated }) => {
@@ -39,7 +49,10 @@ const Navbar = ({ authenticated, setAuthenticated }) => {
         authenticated ? authNavItem = (
             <>
                 <NavItem>
-                    <button onClick={ handleLogout }>Logout</button>
+                    <LogoutButton onClick={ handleLogout }>Logout</LogoutButton>
+                </NavItem>
+                <NavItem>
+                    <NavLink to={`/profile/:id`}>Profile</NavLink>
                 </NavItem>
             </>
         ) : authNavItem = (
