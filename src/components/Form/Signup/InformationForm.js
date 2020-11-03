@@ -56,7 +56,6 @@ const InformationForm = ({
                     name="email"
                     placeholder="Santa.Claus@northpole.com"
                     onChange={ setFields }
-                    autoFocus
                 />
                 <TextField
                     htmlFor='password'

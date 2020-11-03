@@ -6,7 +6,6 @@ import FormButton from '../FormButton'
 import ForgotPassword from '../ForgotPassword';
 import Loader from '../../Loader';
 
-
 const LoginContainer = styled.div`
     @media all and (min-width: 480px) {
         padding: 60px 0;
@@ -20,7 +19,8 @@ const LoginFormContainer = styled.form`
     }
 `;
 
-const LoginForm = ({ loading, validateForm, handleSubmit, email, password, setFields }) => {
+const LoginForm = ({ loading, validateForm, handleSubmit, username, email, password, setFields }) => {
+
     let ui = loading ? (
         <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />
     ) : (
@@ -42,23 +42,22 @@ const LoginForm = ({ loading, validateForm, handleSubmit, email, password, setFi
                     htmlFor='email'
                     labelName="Email"
                     type="text"
-                    value={ email }
+                    value={email}
                     name="email"
                     placeholder="Santa.Claus@northpole.com"
-                    onChange={ setFields }
+                    onChange={setFields}
                     autoFocus
                 />
                 <TextField
                     htmlFor="password"
                     labelName="Password"
                     type="password"
-                    value={ password }
+                    value={password}
                     name="password"
                     placeholder="MrsClaus1234"
-                    onChange={ setFields }
+                    onChange={setFields}
                 />
-                { ui }
-                <ForgotPassword />
+                {ui}
             </LoginFormContainer>
         </LoginContainer>
     );

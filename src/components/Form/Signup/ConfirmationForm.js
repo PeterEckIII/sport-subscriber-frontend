@@ -57,7 +57,7 @@ const ConfirmationForm = ({
 
         try {
             Auth.confirmSignUp(fields.email, fields.confirmationCode)
-            API.post('users', '/users/', payload)
+            API.post('users', '/users', payload)
             Auth.signIn(fields.email, fields.password);
             setAuthenticated(true);
             setLoading(false);

@@ -34,6 +34,27 @@ const ProfileForm = () => {
     const [ subscriptions, dispatch ] = useReducer(subscriptionReducer, subscriptionOptions);
     let { id } = useParams();
 
+    const handleSubmit = () => {
+        setLoading(true);
+        const payload = {
+            email: email,
+            password: password,
+            subscriptions: subscriptions.filter(sub => !sub.isSubscribed)
+        };
+
+        API
+            .put('users', `/users/${ id }`, payload)
+            .then(res => {
+                setLoading(false);
+                console.log(`Response object from UPDATE: ${ res }`)
+            })
+            .catch(e => {
+                setLoading(false);
+                console.log(`Error posting to AWS: ${ e }`)
+            })
+
+    }
+
     const loadUserSettings = id => {
         const payload = {
             queryStringParameters: {
@@ -65,10 +86,7 @@ const ProfileForm = () => {
         <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />
     ) : (
             <>
-                <FormButton
-                    loading={ loading }
-                    onClick={ (e) => setLoading() }
-                >
+                <FormButton loading={ loading }>
                     Save Changes
                 </FormButton>
             </>
@@ -76,7 +94,7 @@ const ProfileForm = () => {
 
     return (
         <PageContainer>
-            <SectionContainer>
+            <SectionContainer onSubmit={ handleSubmit }>
                 <h3>Profile Settings</h3>
                 <TextField
                     htmlFor="email"
@@ -95,14 +113,14 @@ const ProfileForm = () => {
                     name="password"
                     onChange={ e => setPassword(e.target.value) }
                 />
-                { buttonUi }
-            </SectionContainer>
-            <SectionContainer>
+                {/* <SectionContainer> */ }
                 <h3>Subscriptions</h3>
                 <SubscriptionList
                     subscriptions={ subscriptions }
                     dispatch={ dispatch }
                 />
+                {/* </SectionContainer> */ }
+                { buttonUi }
             </SectionContainer>
         </PageContainer>
     )
