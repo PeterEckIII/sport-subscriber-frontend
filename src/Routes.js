@@ -23,7 +23,7 @@ const Routes = () => {
             <Route exact path="/add-subscription">
                 <AddSubscription />
             </Route>
-            <Route exact path='/profile/:id'>
+            <Route path='/profile/:id'>
                 <Profile />
             </Route>
             <Route>
