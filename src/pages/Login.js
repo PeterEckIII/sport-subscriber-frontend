@@ -26,7 +26,6 @@ const Login = () => {
         Auth
             .signIn(fields.email, fields.password)
             .then(res => {
-                console.log(`Cognito User ${ JSON.stringify(res) }`)
                 setAuthenticated(true);
                 history.push('/')
             })
