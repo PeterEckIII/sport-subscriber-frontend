@@ -18,7 +18,7 @@ const SignupForm = () => {
         confirmPassword: "",
         confirmationCode: "",
     });
-    const [user, setUser] = useContext(UserContext);
+    const [user, changeUser] = useContext(UserContext);
 
     const validateConfirmationForm = () => {
         return fields.confirmationCode.length > 0;
@@ -31,10 +31,6 @@ const SignupForm = () => {
             fields.password === fields.confirmPassword
         );
     }
-
-    const changeUser = user => {
-        setUser(user);
-    };
 
     const handleSubmit = e => {
         e.preventDefault();

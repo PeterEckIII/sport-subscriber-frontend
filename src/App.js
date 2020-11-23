@@ -38,10 +38,6 @@ const App = () => {
   const [authenticating, setAuthenticating] = useState(true);
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    checkForSession();
-  }, [])
-
   const checkForSession = () => {
     Auth
       .currentSession()
@@ -61,10 +57,18 @@ const App = () => {
       })
   };
 
+  const changeUser = user => {
+    setUser(user)
+  }
+
+  useEffect(() => {
+    checkForSession();
+  }, [])
+
   return (
     !authenticating && (
       <AppContainer>
-        <UserContext.Provider value={ [ user, setUser ] }>
+        <UserContext.Provider value={ [ user, changeUser ] }>
           <Navbar authenticated={authenticated} setAuthenticated={setAuthenticated} />
           <AppContext.Provider value={{ authenticated, setAuthenticated }}>
             <Routes />

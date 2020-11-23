@@ -19,7 +19,7 @@ const LoginFormContainer = styled.form`
     }
 `;
 
-const LoginForm = ({ loading, validateForm, handleSubmit, username, email, password, setFields }) => {
+const LoginForm = ({ loading, validateForm, handleSubmit, email, password, setFields }) => {
 
     let ui = loading ? (
         <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />

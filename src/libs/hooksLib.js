@@ -1,5 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
-import { API } from 'aws-amplify';
+import { useState } from 'react';
 
 export const useFormFields = initialState => {
     const [ fields, setValues ] = useState(initialState);

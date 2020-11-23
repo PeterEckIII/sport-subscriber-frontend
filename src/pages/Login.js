@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Auth, API } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import { useHistory } from 'react-router-dom';
 import { useFormFields } from '../libs/hooksLib';
 import { useAppContext, UserContext } from '../libs/contextLib';
@@ -9,34 +9,32 @@ import LoginForm from '../components/Form/Login/LoginForm';
 
 const Login = () => {
     const history = useHistory();
-    const [loading, setLoading] = useState(false);
+    const [ loading, setLoading ] = useState(false);
     const { setAuthenticated } = useAppContext();
-    const [fields, setFields] = useFormFields({
+    const [ fields, setFields ] = useFormFields({
         email: '',
         password: ''
     });
-    const [user, setUser] = useContext(UserContext);
+    const [user, changeUser] = useContext(UserContext);
 
     const validateForm = () => {
         return fields.email.length > 0 && fields.password.length > 0;
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        Auth
-            .signIn(fields.email, fields.password)
-            .then(res => {
-                setUser(res.username);
+        try {
+            let signInRes = await Auth.signIn(fields.email, fields.password)
+            if (signInRes) {
                 setAuthenticated(true);
-                history.push('/')
-            })
-            .catch(e => {
-                onError(e);
-            })
-            .finally(_ => {
+                changeUser(signInRes.username);
                 setLoading(false);
-            })
+                history.push("/")
+            }
+        } catch (e) {
+            onError(e)
+        }
     }
     return (
         <LoginForm
