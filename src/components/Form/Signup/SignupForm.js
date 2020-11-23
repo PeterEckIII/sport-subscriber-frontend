@@ -41,9 +41,9 @@ const SignupForm = () => {
                 password: fields.password,
             })
             .then(res => {
-
+                console.log(`ID: ${res.userSub}`)
                 setLoading(false);
-                setUser(res)
+                setUser(res);
             })
             .catch(e => {
                 if (e === "UsernameExistsException") {
@@ -64,6 +64,7 @@ const SignupForm = () => {
                     setLoading={ setLoading }
                     validateConfirmationForm={ validateConfirmationForm }
                     subscriptions={ subscriptions }
+                    userId={user.userSub}
                 />
             ) : (
                     <InformationForm
