@@ -11,6 +11,4 @@ export const SubscriptionContext = createContext([]);
 export const useSubscriptionContext = () => useContext(SubscriptionContext);
 
 // User Context
-export const UserContext = createContext(null);
-
-export const useUserContext = () => useContext(UserContext)
+export const UserContext = createContext({});

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Auth } from 'aws-amplify';
 import { useHistory } from 'react-router-dom';
 
+import { UserContext } from '../../libs/contextLib';
 import NavItem from './NavItem';
 import NavLink from './NavLink';
 import NavGroup from './NavGroup';
@@ -27,6 +28,7 @@ const LogoutButton = styled.button`
 
 const Navbar = ({ authenticated, setAuthenticated }) => {
     const history = useHistory();
+    const [user] = useContext(UserContext);
 
     const handleLogout = () => {
         Auth
@@ -52,7 +54,7 @@ const Navbar = ({ authenticated, setAuthenticated }) => {
                     <LogoutButton onClick={ handleLogout }>Logout</LogoutButton>
                 </NavItem>
                 <NavItem>
-                    <NavLink to={`/profile/:id`}>Profile</NavLink>
+                    <NavLink to={`/profile/${user}`}>Profile</NavLink>
                 </NavItem>
             </>
         ) : authNavItem = (

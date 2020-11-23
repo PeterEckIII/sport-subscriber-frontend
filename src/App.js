@@ -4,7 +4,7 @@ import { Auth } from 'aws-amplify';
 
 import Navbar from './components/Navigation/Navbar';
 import Routes from '../src/Routes';
-import { AppContext } from './libs/contextLib';
+import { AppContext, UserContext } from './libs/contextLib';
 import { onError } from './libs/errorLib';
 
 import Amplify from 'aws-amplify';
@@ -22,7 +22,7 @@ Amplify.configure({
     endpoints: [
       {
         name: "users",
-        endpoint: config.apiGateway.URL,
+        endpoint: config.apiGateway.BASE_URL,
         region: config.apiGateway.REGION
       }
     ]
@@ -34,8 +34,9 @@ const AppContainer = styled.div`
 `;
 
 const App = () => {
-  const [ authenticated, setAuthenticated ] = useState(false);
-  const [ authenticating, setAuthenticating ] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticating, setAuthenticating] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     checkForSession();
@@ -63,10 +64,12 @@ const App = () => {
   return (
     !authenticating && (
       <AppContainer>
-        <Navbar authenticated={ authenticated } setAuthenticated={ setAuthenticated } />
-        <AppContext.Provider value={ { authenticated, setAuthenticated } }>
-          <Routes />
-        </AppContext.Provider>
+        <UserContext.Provider value={ [ user, setUser ] }>
+          <Navbar authenticated={authenticated} setAuthenticated={setAuthenticated} />
+          <AppContext.Provider value={{ authenticated, setAuthenticated }}>
+            <Routes />
+          </AppContext.Provider>
+        </UserContext.Provider>
       </AppContainer>
     )
   );

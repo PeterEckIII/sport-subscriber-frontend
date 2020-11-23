@@ -38,7 +38,8 @@ const ConfirmationForm = ({
     loading,
     setLoading,
     subscriptions,
-    userId
+    userId,
+    changeUser
 }) => {
     const { setAuthenticated } = useAppContext();
     const history = useHistory();
@@ -61,6 +62,7 @@ const ConfirmationForm = ({
             Auth.confirmSignUp(fields.email, fields.confirmationCode)
             API.post('users', '/users', payload)
             Auth.signIn(fields.email, fields.password);
+            changeUser(userId);
             setAuthenticated(true);
             setLoading(false);
             history.push("/")

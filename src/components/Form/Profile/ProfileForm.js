@@ -1,15 +1,9 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import { API } from 'aws-amplify';
+import { useHistory } from 'react-router-dom';
 
-import TextField from '../../TextField';
 import FormButton from '../FormButton';
-import SubscriptionList from '../../../components/Subscription/SubscriptionList';
 import Loader from '../../Loader';
-import { subscriptionReducer } from '../../../libs/reducerLib';
-import { useSubscriptionGenerator } from '../../../libs/hooksLib';
-import { onError } from '../../../libs/errorLib';
 
 const PageContainer = styled.div`
     @media all and (min-width: 480px) {
@@ -26,61 +20,8 @@ const SectionContainer = styled.form`
 `;
 
 const ProfileForm = () => {
-    const [ user, setUser ] = useState(null);
-    const [ email, setEmail ] = useState('');
-    const [ password, setPassword ] = useState('');
     const [ loading, setLoading ] = useState(false);
-    const [ subscriptionOptions ] = useSubscriptionGenerator();
-    const [ subscriptions, dispatch ] = useReducer(subscriptionReducer, subscriptionOptions);
-    let { id } = useParams();
-
-    const handleSubmit = () => {
-        setLoading(true);
-        const payload = {
-            email: email,
-            password: password,
-            subscriptions: subscriptions.filter(sub => !sub.isSubscribed)
-        };
-
-        API
-            .put('users', `/users/${ id }`, payload)
-            .then(res => {
-                setLoading(false);
-                console.log(`Response object from UPDATE: ${ res }`)
-            })
-            .catch(e => {
-                setLoading(false);
-                console.log(`Error posting to AWS: ${ e }`)
-            })
-
-    }
-
-    const loadUserSettings = id => {
-        const payload = {
-            queryStringParameters: {
-                id: id
-            }
-        };
-        API
-            .get('users', `/users/${ id }`, payload)
-            .then(res => {
-                let user = res.user.Item;
-                setUser(user);
-                setEmail(user.email);
-                setPassword(user.password);
-                dispatch({
-                    type: 'LOAD_SUBSCRIPTIONS',
-                    subscriptions: user.subscriptions
-                });
-            })
-            .catch(e => {
-                onError(e)
-            })
-    }
-
-    useEffect(() => {
-        loadUserSettings(id);
-    }, [ id ])
+    const history = useHistory();
 
     let buttonUi = loading ? (
         <Loader size={ 20 } margin={ 5 } color={ '#20BF6B' } />
@@ -94,33 +35,8 @@ const ProfileForm = () => {
 
     return (
         <PageContainer>
-            <SectionContainer onSubmit={ handleSubmit }>
-                <h3>Profile Settings</h3>
-                <TextField
-                    htmlFor="email"
-                    labelName="Email"
-                    type="text"
-                    value={ email }
-                    name="email"
-                    onChange={ e => setEmail(e.target.value) }
-                    autofocus
-                />
-                <TextField
-                    htmlFor="password"
-                    labelName="Password"
-                    type="password"
-                    value={ password }
-                    name="password"
-                    onChange={ e => setPassword(e.target.value) }
-                />
-                {/* <SectionContainer> */ }
-                <h3>Subscriptions</h3>
-                <SubscriptionList
-                    subscriptions={ subscriptions }
-                    dispatch={ dispatch }
-                />
-                {/* </SectionContainer> */ }
-                { buttonUi }
+            <SectionContainer>
+            { buttonUi }
             </SectionContainer>
         </PageContainer>
     )

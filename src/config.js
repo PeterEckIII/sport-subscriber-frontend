@@ -1,8 +1,8 @@
 export default {
     apiGateway: {
-        NAME: "dev-sport-subscriber-user-api",
         REGION: "us-east-1",
-        URL: "https://eoyb7j2hob.execute-api.us-east-1.amazonaws.com/dev"
+        BASE_URL: "https://eoyb7j2hob.execute-api.us-east-1.amazonaws.com/dev",
+        USER_URL: "https://eoyb7j2hob.execute-api.us-east-1.amazonaws.com/dev/users",
     },
     cognito: {
         REGION: "us-east-1",

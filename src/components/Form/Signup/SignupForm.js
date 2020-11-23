@@ -1,14 +1,14 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useContext } from 'react';
 import { Auth } from 'aws-amplify';
 import { useSubscriptionGenerator, useFormFields } from '../../../libs/hooksLib';
 import { onError } from '../../../libs/errorLib';
 import { subscriptionReducer } from '../../../libs/reducerLib';
+import { UserContext } from '../../../libs/contextLib';
 
 import ConfirmationForm from './ConfirmationForm';
 import InformationForm from './InformationForm';
 
 const SignupForm = () => {
-    const [ user, setUser ] = useState(null);
     const [ loading, setLoading ] = useState(false);
     const [ subscriptionOptions ] = useSubscriptionGenerator();
     const [ subscriptions, dispatch ] = useReducer(subscriptionReducer, subscriptionOptions);
@@ -18,6 +18,7 @@ const SignupForm = () => {
         confirmPassword: "",
         confirmationCode: "",
     });
+    const [user, setUser] = useContext(UserContext);
 
     const validateConfirmationForm = () => {
         return fields.confirmationCode.length > 0;
@@ -31,6 +32,10 @@ const SignupForm = () => {
         );
     }
 
+    const changeUser = user => {
+        setUser(user);
+    };
+
     const handleSubmit = e => {
         e.preventDefault();
         setLoading(true);
@@ -42,8 +47,8 @@ const SignupForm = () => {
             })
             .then(res => {
                 console.log(`ID: ${res.userSub}`)
+                changeUser(res.userSub);
                 setLoading(false);
-                setUser(res);
             })
             .catch(e => {
                 if (e === "UsernameExistsException") {
@@ -64,7 +69,8 @@ const SignupForm = () => {
                     setLoading={ setLoading }
                     validateConfirmationForm={ validateConfirmationForm }
                     subscriptions={ subscriptions }
-                    userId={user.userSub}
+                    userId={user}
+                    changeUser={changeUser}
                 />
             ) : (
                     <InformationForm
