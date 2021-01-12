@@ -1,68 +1,44 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { API } from 'aws-amplify';
+import React from 'react';
 import styled from 'styled-components';
 
-import { UserContext } from '../../../libs/contextLib';
-
 const PageContainer = styled.div`
-    @media all and (min-width: 480px) {
-        padding: 60px 0;
-    }
+  @media all and (min-width: 480px) {
+    padding: 60px 0;
+  }
 `;
 
-const SectionContainer = styled.div`
-    @media all and (min-width: 480px) {
-        margin: 0% 8%;
-        max-width: 320px;
-        margin-bottom: 45px;
-    }
+const SectionContainer = styled.form`
+  @media all and (min-width: 480px) {
+    margin: 0% 8%;
+    max-width: 320px;
+    margin-bottom: 45px;
+  }
 `;
 
-const ProfileForm = () => {
-    const [user] = useContext(UserContext);
-    const [fetchedUser, setFetchedUser] = useState({})
+const CardContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
-    const handleEmailChange = e => {
-        setFetchedUser(prevUser => {
-            return {
-                ...prevUser,
-                email: e.target.value
-            }
-        });
-    };
+const Card = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+`;
 
-    const handleProfileChange = e => {
-        e.preventDefault();
-        console.log(`Event object: ${e}`);
-    };
+const ProfileForm = ({ user, handleSubmit}) => {
 
-    useEffect(() => {
-        API
-            .get('users', `/users/${user}`, {})
-            .then(res => {
-                setFetchedUser(res.user)
-            })
-            .catch(e => alert(`Error fetching user object: ${e}`))
-
-    }, [user]);
-
-    return (
-        <PageContainer>
-            <SectionContainer>
-                <form onSubmit={handleProfileChange}>
-                    <label htmlFor='email'>Email</label>
-                    <input
-                        type="text"
-                        name='email'
-                        id='email'
-                        value={fetchedUser.email}
-                        onChange={handleEmailChange}
-                    />
-                    <button type='submit'>Submit Changes</button>
-                </form>
-            </SectionContainer>
-        </PageContainer>
-    )
+  return (
+    <PageContainer>
+    <SectionContainer onSubmit={handleSubmit}>
+    </SectionContainer>
+    <CardContainer>
+    { user.subscriptions.map(sub => {
+        return <Card>{ sub.name }</Card> }
+     )} 
+    </CardContainer>
+    </PageContainer>
+  )
 }
 
 export default ProfileForm;
