@@ -6,6 +6,8 @@ import Navbar from './components/Navigation/Navbar';
 import Routes from '../src/Routes';
 import { AppContext, UserContext } from './libs/contextLib';
 import { onError } from './libs/errorLib';
+import { ProvideAuth } from './libs/authLib';
+import { ProvideUser } from './libs/userLib';
 
 import Amplify from 'aws-amplify';
 import config from './config';
@@ -30,7 +32,7 @@ Amplify.configure({
 });
 
 const AppContainer = styled.div`
-  margin-top: 15px;
+margin-top: 15px;
 `;
 
 const App = () => {
@@ -68,12 +70,16 @@ const App = () => {
   return (
     !authenticating && (
       <AppContainer>
-        <UserContext.Provider value={ [ user, changeUser ] }>
-          <Navbar authenticated={authenticated} setAuthenticated={setAuthenticated} />
-          <AppContext.Provider value={{ authenticated, setAuthenticated }}>
-            <Routes />
-          </AppContext.Provider>
-        </UserContext.Provider>
+        <ProvideAuth>
+          <ProvideUser>
+            <UserContext.Provider value={ [ user, changeUser ] }>
+              <Navbar authenticated={authenticated} setAuthenticated={setAuthenticated} />
+              <AppContext.Provider value={{ authenticated, setAuthenticated }}>
+                <Routes />
+              </AppContext.Provider>
+            </UserContext.Provider>
+          </ProvideUser>
+        </ProvideAuth>
       </AppContainer>
     )
   );
