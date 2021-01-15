@@ -4,6 +4,7 @@ import { useSubscriptionGenerator, useFormFields } from '../../../libs/hooksLib'
 import { onError } from '../../../libs/errorLib';
 import { subscriptionReducer } from '../../../libs/reducerLib';
 import { UserContext } from '../../../libs/contextLib';
+import { useAuth } from '../../../libs/authLib';
 
 import ConfirmationForm from './ConfirmationForm';
 import InformationForm from './InformationForm';
@@ -18,7 +19,9 @@ const SignupForm = () => {
         confirmPassword: "",
         confirmationCode: "",
     });
-    const [user, changeUser] = useContext(UserContext);
+    const [contextUser, changeContextUser] = useContext(UserContext);
+
+    const { user, signup } = useAuth();
 
     const validateConfirmationForm = () => {
         return fields.confirmationCode.length > 0;
@@ -32,32 +35,23 @@ const SignupForm = () => {
         );
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-
-        Auth
-            .signUp({
-                username: fields.email,
-                password: fields.password,
-            })
-            .then(res => {
-                console.log(`ID: ${res.userSub}`)
-                changeUser(res.userSub);
-                setLoading(false);
-            })
-            .catch(e => {
-                if (e === "UsernameExistsException") {
-                    Auth.resendSignUp(fields.email)
-                }
-                onError(e)
-                setLoading(false);
-            })
-    }
+        try {
+          let signedUpUser = await signup(fields.email, fields.password);
+          changeContextUser(signedUpUser);
+          setLoading(false);
+          return signedUpUser;
+        } catch (e) {
+          setLoading(false);
+          console.log(`Error signing up: ${e}`);
+        }
+    };
 
     return (
         <>
-            { user ? (
+            { contextUser ? (
                 <ConfirmationForm
                     fields={ fields }
                     setFields={ setFields }
@@ -65,8 +59,8 @@ const SignupForm = () => {
                     setLoading={ setLoading }
                     validateConfirmationForm={ validateConfirmationForm }
                     subscriptions={ subscriptions }
-                    userId={user}
-                    changeUser={changeUser}
+                    userId={contextUser}
+                    changeUser={changeContextUser}
                 />
             ) : (
                     <InformationForm
