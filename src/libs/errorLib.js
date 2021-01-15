@@ -3,5 +3,5 @@ export const onError = error => {
     if (!(error instanceof Error) && error.message) {
         message = error.message;
     }
-    alert(message)
+    console.log(message)
 }
